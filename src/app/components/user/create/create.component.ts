@@ -15,8 +15,10 @@ import { Utils } from 'src/app/utils/utils';
 
 export class CreateComponent implements OnInit {
   confirmPassword: string = '';
+  errorMessage: string = '';
   passwordsMatch: boolean = true;
   signupForm!: FormGroup;
+  
 
   constructor(private fb: FormBuilder, private apiService: UserService, private router: Router) { }
 
@@ -24,7 +26,7 @@ export class CreateComponent implements OnInit {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],
       fullName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required]
@@ -50,7 +52,7 @@ export class CreateComponent implements OnInit {
       this.router.navigate(['login']);
     },
       (error: any) => {
-        console.error('Error:', error);
+        this.errorMessage = "¡Ups! ocurrío un error al procesar tu solicitud, intente de nuevo más tarde.";
       }
     );
   }

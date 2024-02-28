@@ -21,13 +21,17 @@
 
 .text-red {
     color: red;
+    margin-top: 3px;
 }
 
+p{
+    padding: 10px 10px;
+}
 
 .div-right {
     text-align: right;
     margin-right: 20px;
-    width: 98%;
-    font-size: 17px;
+    width: 94%;
+    font-size: 18px;
     font-weight: 700;
 }

@@ -63,11 +63,17 @@
                             <div class="text-red" *ngIf="!passwordsMatch && signupForm.get('confirmPassword')?.dirty">
                                 Las contraseñas no coinciden.
                             </div>
+                            <div class="text-red" *ngIf="errorMessage !== ''">
+                                {{ errorMessage }}
+                            </div>
                         </div>
 
                         <div>
                             <button type="submit" class="btn btn-primary"
                                 [disabled]="signupForm.invalid || !passwordsMatch"><b>Registrarse</b></button>
+                        </div>
+                        <div>
+                            <p>¿Ya tienes una cuenta? <a href="/login"><b>Iniciar sesión</b></a></p>
                         </div>
                     </form>
                 </div>

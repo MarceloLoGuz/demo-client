@@ -38,6 +38,6 @@ export class UserService {
 
 
   async getUsers(): Promise<Observable<User[]>> {
-    return this.http.get<User[]>(this.userPath.all, { headers: this.headers });
+    return this.http.get<User[]>(this.userPath.all, { headers: this.headers, withCredentials: true });
   }
 }

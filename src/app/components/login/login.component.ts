@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private apiService: AuthService, private router: Router) { }
 
@@ -35,7 +36,9 @@ export class LoginComponent implements OnInit {
       .subscribe((response: any) => {
         localStorage.setItem('token', response.body.token);
         this.router.navigate(['']); // go to home
-      }, (error: any) => { }
+      }, (error: any) => { 
+        this.errorMessage = "¡Ups! ocurrío un error al procesar tu solicitud, verifica que tus credenciales estén correctos.";        
+      }
       );
   }
 }

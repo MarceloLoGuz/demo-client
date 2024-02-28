@@ -57,6 +57,9 @@
             <div class="text-red" *ngIf="!passwordsMatch && userUpdateForm.get('confirmPassword')?.dirty">
                 Las contraseñas no coinciden.
             </div>
+            <div class="text-red" *ngIf="errorMessage !== ''">
+                {{ errorMessage }}
+            </div>
         </div>
         <div>
             <button type="submit" class="btn btn-primary"

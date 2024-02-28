@@ -23,11 +23,17 @@
                                 *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
                                 La contraseña es requerida.
                             </div>
+                            <div class="text-red" *ngIf="errorMessage !== ''">
+                                {{ errorMessage }}
+                            </div>
                         </div>
 
                         <div>
                             <button type="submit" class="btn btn-primary"
-                                [disabled]="loginForm.invalid"><b>Enviar</b></button>
+                                [disabled]="loginForm.invalid"><b>Iniciar sesión</b></button>
+                        </div>
+                        <div>
+                            <p>Aún no tiene una cuenta? <a href="/signup"><b>Registrarse</b></a></p>
                         </div>
                     </form>
                 </div>

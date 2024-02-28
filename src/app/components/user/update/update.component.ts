@@ -16,6 +16,7 @@ import { ModalService } from 'src/app/services/modal.service';
 export class UpdateComponent implements OnInit {
   @Input() userData: User | undefined;
   confirmPassword: string = '';
+  errorMessage: string = '';
   passwordsMatch: boolean = false;
   userUpdateForm!: FormGroup;
 
@@ -29,7 +30,7 @@ export class UpdateComponent implements OnInit {
     this.userUpdateForm = this.fb.group({
       username: [this.userData?.username, [Validators.required]],
       fullName: [this.userData?.fullName, [Validators.required]],
-      email: [this.userData?.email, [Validators.required]],
+      email: [this.userData?.email, [Validators.required, Validators.email]],
       phoneNumber: [this.userData?.phoneNumber, [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required]
@@ -56,7 +57,7 @@ export class UpdateComponent implements OnInit {
       this.modalService.closeModal();
     },
       (error: any) => {
-        console.error('Error:', error);
+        this.errorMessage = "¡Ups! ocurrío un error al intentar guardar los datos, intente de nuevo más tarde.";
       }
     );
   }
