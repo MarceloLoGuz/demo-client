@@ -1,0 +1,86 @@
+<app-navbar></app-navbar>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Archivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let document of documents; let i = index">
+                <th scope="row">{{ i }}</th>
+                <td>{{document.fileName}}</td>
+                <td>{{document.contentType}}</td>
+                <td>
+                    <ng-container *ngIf="document.data.startsWith('data:image')">
+                        <img [src]="document.data" alt="{{ document.fileName }}" style="max-width: 100%; height: auto;">
+                    </ng-container>
+                    <ng-container *ngIf="document.data.startsWith('data:application/pdf')">
+                        <a [href]="document.data" download="{{ document.fileName }}">Descargar PDF</a>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="document.data.startsWith('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')">
+                        <a [href]="document.data" download="{{ document.fileName }}">Descargar Excel</a>
+                    </ng-container>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <div class="div-right">
+        <button type="button" class="btn btn-primary" (click)="openModal(content)">Cargar documento(s)</button>
+    </div>
+
+
+    <!-- Modal upload documents-->
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Subir documento(s)</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <input type="file" #fileInput multiple (change)="onFileChange($event)">
+
+            <div *ngIf="selectedFiles.length !== 0">
+                <br>
+                <p class="text-red"><i><b>Reasignar el nombre de los archivos archivos cargados...</b></i></p>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre del archivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let file of selectedFiles; let i = index">
+                            <th scope="row">{{ i }}</th>
+                            <td>
+                                <input type="text" class="form-control" [value]="fileNames[i]"
+                                    (input)="onFileNameChange($event, i)" placeholder="...">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Spinner -->
+        <div *ngIf="showSpinner" class="spinner-border text-primary" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <!-- End spinner -->
+        <br>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" [disabled]="!selectedFiles || selectedFiles.length === 0"
+                (click)="uploadFiles()">Guardar</button>
+        </div>
+    </ng-template>
+     <!-- End modal upload documents-->
+</div>

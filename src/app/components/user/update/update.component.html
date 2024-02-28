@@ -1,0 +1,68 @@
+<div>
+    <form [formGroup]="userUpdateForm" (ngSubmit)="saveChanges()">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="username" formControlName="username"
+                value="{{ userData?.id }}" autocomplete="new-username" required>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('username')?.hasError('required') && userUpdateForm.get('username')?.touched">
+                Username es requerido.
+            </div>
+
+        </div>
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="fullName" placeholder="Nombre completo"
+                formControlName="fullName" value="{{ userData?.fullName }}" required>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('fullName')?.hasError('required') && userUpdateForm.get('fullName')?.touched">
+                Nombre completo es requerido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" placeholder="example@example.com"
+                formControlName="email" value="{{ userData?.email }}" required>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('email')?.hasError('required') && userUpdateForm.get('email')?.touched">
+                Email es requerido.
+            </div>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('email')?.hasError('email') && userUpdateForm.get('email')?.touched">
+                Email no válido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">No. Teléfono</label>
+            <input type="number" class="form-control" id="phoneNumber" placeholder="No. Teléfono"
+                formControlName="phoneNumber" value="{{ userData?.phoneNumber }}" required>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('phoneNumber')?.hasError('required') && userUpdateForm.get('phoneNumber')?.touched">
+                No. Teléfono es requerido.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" placeholder="********" formControlName="password"
+                autocomplete="new-password" required>
+            <div class="text-red"
+                *ngIf="userUpdateForm.get('password')?.invalid && userUpdateForm.get('password')?.touched">
+                La contraseña es requerida y debe tener al menos 8 caracteres.
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword"
+                placeholder="********" autocomplete="new-password" required>
+            <div class="text-red" *ngIf="!passwordsMatch && userUpdateForm.get('confirmPassword')?.dirty">
+                Las contraseñas no coinciden.
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary"
+                [disabled]="userUpdateForm.invalid || !passwordsMatch"><b>Guardar
+                    cambios</b></button>
+        </div>
+        <br>
+    </form>
+</div>

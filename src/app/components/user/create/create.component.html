@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card">
+                <h3><b>Registrarse</b></h3>
+                <div class="card-body">
+                    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="username"
+                                formControlName="username" autocomplete="new-username" required>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('username')?.hasError('required') && signupForm.get('username')?.touched">
+                                Username es requerido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Nombre completo"
+                                formControlName="fullName" required>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('fullName')?.hasError('required') && signupForm.get('fullName')?.touched">
+                                Nombre completo es requerido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@example.com"
+                                formControlName="email" required>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('email')?.hasError('required') && signupForm.get('email')?.touched">
+                                Email es requerido.
+                            </div>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched">
+                                Email no válido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">No. Teléfono</label>
+                            <input type="number" class="form-control" id="phoneNumber" placeholder="No. Teléfono"
+                                formControlName="phoneNumber" required>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('phoneNumber')?.hasError('required') && signupForm.get('phoneNumber')?.touched">
+                                No. Teléfono es requerido.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="********"
+                                formControlName="password" autocomplete="new-password" required>
+                            <div class="text-red"
+                                *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+                                La contraseña es requerida y debe tener al menos 8 caracteres.
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirmar contraseña</label>
+                            <input type="password" class="form-control" id="confirmPassword"
+                                formControlName="confirmPassword" placeholder="********" autocomplete="new-password"
+                                required>
+
+                            <div class="text-red" *ngIf="!passwordsMatch && signupForm.get('confirmPassword')?.dirty">
+                                Las contraseñas no coinciden.
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="signupForm.invalid || !passwordsMatch"><b>Registrarse</b></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

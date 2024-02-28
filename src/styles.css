@@ -1,1 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+.table {
+    margin: 20px;
+    width: 98% !important;
+}
+
+.card {
+    border-style: none !important;
+    background-color: #eeeeee !important;
+    margin: 20px;
+}
+
+.card-body {
+    padding: 30px !important;
+}
+
+.col-sm-5 {
+    padding: 0;
+    background-color: #FFFFFF;
+    margin: auto;
+}
+
+.text-red {
+    color: red;
+}
+
+
+.div-right {
+    text-align: right;
+    margin-right: 20px;
+    width: 98%;
+    font-size: 17px;
+    font-weight: 700;
+}

@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">
+            <div class="card">
+                <h3 style="text-align: center; padding-top: 40px;"><b>Iniciar sesión</b></h3>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="username"
+                                formControlName="username" required>
+                            <div class="text-red"
+                                *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+                                Username es requerido.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="********"
+                                formControlName="password" autocomplete="new-password" required>
+                            <div class="text-red"
+                                *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                                La contraseña es requerida.
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="loginForm.invalid"><b>Enviar</b></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
