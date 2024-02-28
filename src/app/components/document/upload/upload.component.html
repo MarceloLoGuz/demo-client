@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div>
+<div>   
     <table class="table">
         <thead>
             <tr>
@@ -16,14 +16,18 @@
                 <td>{{document.contentType}}</td>
                 <td>
                     <ng-container *ngIf="document.data.startsWith('data:image')">
-                        <img [src]="document.data" alt="{{ document.fileName }}" style="max-width: 100%; height: auto;">
+                        <img [src]="document.data" alt="{{ document.fileName }}" class="img-file">
                     </ng-container>
                     <ng-container *ngIf="document.data.startsWith('data:application/pdf')">
-                        <a [href]="document.data" download="{{ document.fileName }}">Descargar PDF</a>
+                        <a [href]="trustUrl(document.data)" download="{{document.fileName}}">Descargar PDF</a>
+                    </ng-container>
+                    <ng-container
+                        *ngIf="document.data.startsWith('data:application/vnd.openxmlformats-officedocument.wordprocessingml.document')">
+                        <a [href]="trustUrl(document.data)" download="{{ document.fileName }}">Descargar Word</a>
                     </ng-container>
                     <ng-container
                         *ngIf="document.data.startsWith('data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')">
-                        <a [href]="document.data" download="{{ document.fileName }}">Descargar Excel</a>
+                        <a [href]="trustUrl(document.data)" download="{{ document.fileName }}">Descargar Excel</a>
                     </ng-container>
                 </td>
             </tr>
@@ -70,6 +74,10 @@
             </div>
         </div>
 
+        <div class="text-red" *ngIf="errorMessage !== ''">
+            {{ errorMessage }}
+        </div>
+
         <!-- Spinner -->
         <div *ngIf="showSpinner" class="spinner-border text-primary" role="status">
             <span class="sr-only"></span>
@@ -82,5 +90,5 @@
                 (click)="uploadFiles()">Guardar</button>
         </div>
     </ng-template>
-     <!-- End modal upload documents-->
+    <!-- End modal upload documents-->
 </div>

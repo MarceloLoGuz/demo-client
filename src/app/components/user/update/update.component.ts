@@ -17,7 +17,10 @@ export class UpdateComponent implements OnInit {
   @Input() userData: User | undefined;
   confirmPassword: string = '';
   errorMessage: string = '';
+
   passwordsMatch: boolean = false;
+  showSpinner: boolean = false;
+
   userUpdateForm!: FormGroup;
 
 
@@ -42,7 +45,9 @@ export class UpdateComponent implements OnInit {
   }
 
 
-  async saveChanges():Promise<void> {
+  async saveChanges(): Promise<void> {
+    this.showSpinner = true;
+
     const user: User = {
       id: this.userData?.id || null,
       username: this.userUpdateForm.get('username')?.value,
@@ -52,19 +57,22 @@ export class UpdateComponent implements OnInit {
       password: this.userUpdateForm.get('password')?.value
     };
 
-    (await this.apiService.updateUser(user)).subscribe((response: any) => {
-      this.router.navigate(['']); // go to home
-      this.modalService.closeModal();
-    },
-      (error: any) => {
-        this.errorMessage = "¡Ups! ocurrío un error al intentar guardar los datos, intente de nuevo más tarde.";
-      }
-    );
+
+    setTimeout(async () => {
+      (await this.apiService.updateUser(user)).subscribe((response: any) => {
+        this.router.navigate(['']); // go to home
+        this.modalService.closeModal();
+      },
+        (error: any) => {
+          this.errorMessage = "¡Ups! ocurrío un error al intentar guardar los datos, intente de nuevo más tarde.";
+        }
+      );
+    }, 2000);
   }
 
 
 
-  listenPasswords(option: string):void {
+  listenPasswords(option: string): void {
     this.userUpdateForm.get(option)!.valueChanges.subscribe(() => {
       this.passwordsMatch = Utils.validatePasswords(this.userUpdateForm.get('password')!.value, this.userUpdateForm.get('confirmPassword')!.value);
     });

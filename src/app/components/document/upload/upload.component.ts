@@ -3,8 +3,9 @@ import { DocumentService } from 'src/app/services/document.service';
 import { Document } from 'src/app/models/document.model.';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from 'src/app/services/modal.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Utils } from 'src/app/utils/utils';
+
 
 @Component({
   selector: 'app-upload',
@@ -12,6 +13,8 @@ import { Utils } from 'src/app/utils/utils';
   styleUrls: ['./upload.component.css'],
   providers: [NgbModalConfig, NgbModal]
 })
+
+
 export class UploadComponent implements OnInit {
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
@@ -21,8 +24,8 @@ export class UploadComponent implements OnInit {
 
   showModal = false;
   showSpinner: boolean = false;
+  errorMessage: string = '';
 
-  
   constructor(private apiService: DocumentService, config: NgbModalConfig,
     private modalService: ModalService, private sanitizer: DomSanitizer) {
     config.backdrop = 'static';
@@ -37,13 +40,15 @@ export class UploadComponent implements OnInit {
 
   async getDocuments(): Promise<void> {
     (await this.apiService.getDocuments()).subscribe((documents: Document[]) => {
-      this.documents = documents.map((file: Document) => ({
-        id: file.id,
-        fileName: file.fileName,
-        contentType: file.contentType,
-        data: this.sanitizer.bypassSecurityTrustUrl(file.data) as string
-      }));
+      this.documents = documents;
     });
+  }
+
+
+
+  trustUrl(base64String: string): SafeUrl {
+    const url = base64String;
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
 
@@ -90,7 +95,7 @@ export class UploadComponent implements OnInit {
       (await this.apiService.uploadDocument(upload)).subscribe((response: Document[]) => {
         this.getDocuments();
       }, (error: any) => {
-        return;
+        this.errorMessage = "¡Ups! ocurrío un error al intentar subir los archivos, intente de nuevo más tarde.";  
       }
       );
 
@@ -100,7 +105,7 @@ export class UploadComponent implements OnInit {
       this.modalService.dismissAll();
     }, 2000);
   }
-  
+
 
   // Open a modal to upload files
   openModal(content: any): void {

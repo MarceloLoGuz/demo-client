@@ -2,3 +2,9 @@ button {
     width: 100%;
     margin: 1%;
 }
+
+.spinner-div{
+    width: 100%;
+    text-align: center;
+    margin: 10px;
+}
